@@ -10,7 +10,7 @@ export default function Song({ song, songName, currentTrack, setCurrentTrack, i 
             setCurrentTrack(i);
     }, [songName,])
 
-    return (<p key={song.trackName}
+    return (<p key={i}
         ref={ref}
         data-a={currentTrack === i || song.trackName === songName}
         className="transition text-gray-400 select-none hover:text-gray-500 data-[a=true]:font-medium data-[a=true]:text-gray-600 data-[a=true]:hover:text-gray-600 cursor-pointer max-w-full whitespace-nowrap overflow-y-scroll text-ellipsis"

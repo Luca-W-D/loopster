@@ -34,6 +34,12 @@ export default function MusicViewer({ numberOfSeeks, smartSeek, currentSession, 
         setRequest([sessions[currentSession][currentTrack].trackName, sessions[currentSession][currentTrack].artistName])
     }, [currentTrack])
 
+    if (!sessions || sessions.length === 0)
+        return (<div className="rounded-lg bg-white shadow w-64 flex flex-col justify-center items-center p-4 text-center py-10">
+            <p className="font-bold text-lg">No history yet</p>
+            <p className="font-medium text-gray-600 text-base">Upload your history files to use this feature</p>
+        </div>)
+
     if (currentSession < 0)
         return <div className="divide-y divide-gray-200 rounded-lg bg-white shadow w-64 flex flex-col">
             <div className="px-4 py-2 pb-0 sm:p-6 sm:py-3 flex-grow overflow-y-scroll h-[18rem]">Choose a session to begin</div>
@@ -63,7 +69,7 @@ export default function MusicViewer({ numberOfSeeks, smartSeek, currentSession, 
     return (
         <div className="divide-y divide-gray-200 rounded-lg bg-white shadow w-64 flex flex-col">
             <div className="px-4 py-2 pb-0 sm:p-6 sm:py-3 flex-grow overflow-y-scroll h-[18rem]">
-                <p className="w-full text-center text-gray-400">{sessions[currentSession].length} songs</p>
+                <p className="w-full text-center text-gray-400" key={-1}>{sessions[currentSession].length} songs</p>
                 {sessions[currentSession].map((song, i) => {
                     return (<Song i={i} currentTrack={currentTrack} setCurrentTrack={setCurrentTrack} song={song} songName={songName} />)
                 })}

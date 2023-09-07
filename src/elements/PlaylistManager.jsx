@@ -2,8 +2,9 @@ import React, { useState, Fragment, useEffect } from "react";
 
 import { XMarkIcon } from "@heroicons/react/24/outline"
 import PlaylistModal from "../components/PlaylistModal";
+import { musicManager } from "../managers/MusicManager";
 
-export default function PlaylistManager({ uri, playlists, setPlaylists, currentPlaylist, setCurrentPlaylist, songName, setRequest, currentTrack, setCurrentTrack, sessions, currentSession }) {
+export default function PlaylistManager({ uri, currentSong, playlists, setPlaylists, currentPlaylist, setCurrentPlaylist, songName, setRequest, setCurrentTrack, sessions, currentSession, mode }) {
     const [modalOpen, setModalOpen] = useState(false);
 
 
@@ -31,30 +32,33 @@ export default function PlaylistManager({ uri, playlists, setPlaylists, currentP
 
     }
     const deleteSong = (i, name) => {
-        setPlaylists(p => [...p.slice(0, i), { ...p[i], songs: p[i].songs.filter(v => v.trackName !== name) }, ...p.slice(i + 1)])
+        setPlaylists(p => [...p.slice(0, i), { ...p[i], songs: p[i].songs.filter(v => v.name !== name) }, ...p.slice(i + 1)])
+    }
+    const increaseTrack = () => {
+        if (mode === "Search")
+            return
+        setCurrentTrack(t => t + 1)
     }
 
     // handle input management
     const handleKeyPress = e => {
-        // session must exist before setting track
-        if (currentSession < 0 || currentSession > sessions.length - 1)
-            return;
+        var key = e.keyCode;
         // dont run if in input
         if (document.activeElement.tagName.toLowerCase() == "input")
             return
-        var key = e.keyCode;
-        if (key == 37 || key == 49)
-            setCurrentTrack(t => t + 1)
         // handling the "add to playlist" right arrow click requires that a playlist is target-able
-        if (currentPlaylist < 0)
-            return
         if (key == 39 || key == 50) {
-            const songToAdd = sessions[currentSession][currentTrack]
-            setCurrentTrack(t => t + 1)
+            console.log("key press")
+            if (currentPlaylist < 0) return
+            const songToAdd = musicManager.getCurrentSong()
+            if (!songToAdd) return
+            increaseTrack(t => t + 1)
             if (!songToAdd) return;
-            if (playlists[currentPlaylist].songs.filter(s => s.trackName === songToAdd.trackName).length > 0) return;
-            setPlaylists(p => [...p.slice(0, currentPlaylist), { ...p[currentPlaylist], songs: [...p[currentPlaylist].songs, { ...songToAdd, uri: uri }] }, ...p.slice(currentPlaylist + 1)])
+            if (playlists[currentPlaylist].songs.filter(s => s.name === songToAdd.name).length > 0) return;
+            setPlaylists(p => [...p.slice(0, currentPlaylist), { ...p[currentPlaylist], songs: [...p[currentPlaylist].songs, songToAdd] }, ...p.slice(currentPlaylist + 1)])
         }
+        if (key == 37 || key == 49)
+            increaseTrack(t => t + 1)
     }
     useEffect(() => {
         document.addEventListener('keyup', handleKeyPress);
@@ -79,7 +83,7 @@ export default function PlaylistManager({ uri, playlists, setPlaylists, currentP
         </div>
         {playlists.map((playlist, i) => {
             return <div key={i}
-                data-contains={playlist.songs.some(song => song.trackName === songName)}
+                data-contains={playlist.songs.some(song => currentSong && song.name === currentSong.name)}
                 className="overflow-hidden rounded-lg shadow border border-gray-200 flex-grow min-w-[10rem] max-w-[25rem] w-[15rem] data-[selected=true]:ring ring-indigo-500 data-[contains=true]:ring-green-500 transition"
                 onClick={() => setCurrentPlaylist(i)}
                 data-selected={currentPlaylist === i}>
@@ -91,12 +95,12 @@ export default function PlaylistManager({ uri, playlists, setPlaylists, currentP
                     </span>
                 </div>
                 <div className="bg-gray-50 px-4 py-3 sm:p-3 h-full max-h-[12rem] overflow-y-scroll">
-                    {playlist.songs.map(song => {
-                        return <div key={song.trackName}
-                            data-a={song.trackName === songName}
+                    {playlist.songs.map((song, j) => {
+                        return <div key={j}
+                            data-a={currentSong && song.name === currentSong.name}
                             className="w-full flex gap-2 items-center text-gray-400 hover:text-gray-500 data-[a=true]:font-medium data-[a=true]:text-gray-600 data-[a=true]:hover:text-gray-600 cursor-pointer max-w-full whitespace-nowrap overflow-y-scroll text-ellipsis">
-                            <XMarkIcon onClick={() => deleteSong(i, song.trackName)} className="h-4 w-4" />
-                            <span className="w-full overflow-hidden text-ellipsis whitespace-nowrap" onClick={() => { setCurrentTrack(-1); setRequest([song.trackName, song.artistName]) }}>{song.trackName}</span>
+                            <XMarkIcon onClick={() => deleteSong(i, song.name)} className="h-4 w-4" />
+                            <span className="w-full overflow-hidden text-ellipsis whitespace-nowrap" onClick={() => { setCurrentTrack(-1); musicManager.playSongFromObject(song) }}>{song.name}</span>
                         </div>
                     })}
                 </div>

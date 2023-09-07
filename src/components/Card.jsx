@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Card({ title, children, actionName, action, secondAction, secondActionName, hideTitle, hideBody }) {
+export default function Card({ title, children, actionName, action, secondAction, secondActionName, hideTitle, hideBody, removePadding }) {
     return (
         <div className="overflow-hidden rounded-lg bg-white shadow border border-gray-200">
             {!hideTitle && <div className="border-b border-gray-200 px-4 py-4 sm:px-6 flex items-center justify-between">
@@ -25,7 +25,8 @@ export default function Card({ title, children, actionName, action, secondAction
                     }
                 </span>
             </div>}
-            {!hideBody && <div className="bg-gray-50 px-4 py-5 sm:p-6">{children}</div>}
+            {!hideBody && removePadding && <div className="bg-gray-50">{children}</div>}
+            {!hideBody && !removePadding && <div className="bg-gray-50 px-4 py-5 sm:p-6">{children}</div>}
         </div>
     )
 }
