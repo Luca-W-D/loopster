@@ -1,6 +1,6 @@
 # Loopster
 
-## Demo now live at [https://loopster.l-uca.com](loopster.l-uca.com)!
+## Demo now live at [loopster.l-uca.com](https://loopster.l-uca.com)!
 
 Loopster is an open-source, self-hosted tool that allows for users to upload their downloaded Spotify history and create playlists.
 
