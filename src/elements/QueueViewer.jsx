@@ -30,6 +30,7 @@ export default function MusicViewer({ numberOfSeeks, smartSeek, currentSession, 
     }, [currentSession])
 
     useEffect(() => {
+        if(!sessions || sessions.length == 0) return
         if (currentTrack < 0 || currentTrack > sessions[currentSession].length - 1) return;
         setRequest([sessions[currentSession][currentTrack].trackName, sessions[currentSession][currentTrack].artistName])
     }, [currentTrack])
