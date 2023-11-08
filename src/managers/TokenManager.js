@@ -124,7 +124,7 @@ class TokenManager {
         return this.token;
     }
 
-    async isReady() {
+    isReady() {
         if (!this.code) return false;
         if (this.token && this.calculateTimeToExpiration() > 0) return true;
         // otherwise, we can request a token but haven't yet – do so.
