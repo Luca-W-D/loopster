@@ -1,13 +1,22 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, Fragment } from "react"
 
 import History from "../elements/History";
 import Player from "../elements/Player";
 import PlaylistManager from "../elements/PlaylistManager";
 import Transfer from "../elements/Transfer";
+import TutorialModal from "../elements/TutorialModal"
+import FooterCard from "../components/FooterCard";
+import TutorialProgression from "../elements/TutorialProgression"
 
 import { musicManager } from "../managers/MusicManager";
 
+import { LifebuoyIcon } from "@heroicons/react/24/outline";
+
 export default function Dashboard() {
+    // tutorial management
+    const [tutorialState, setTutorialState] = useState(-1);
+    const [showTutorialPrompt, setShowTutorialPrompt] = useState(localStorage.getItem("tutorialPrompted") === null || localStorage.getItem("tutorialPrompted") === undefined)
+    // data management
     const [sessions, setSessions] = useState([]);
     const [request, setRequest] = useState([]);
     const [songName, setSongName] = useState(null);
@@ -88,7 +97,49 @@ export default function Dashboard() {
         }
     }, [])
 
-    return <div className="min-h-full flex flex-col gap-2 pt-8">
+    useEffect(() => {
+        if(tutorialState >= 9)
+            setTutorialState(-1);
+    }, [tutorialState])
+
+    const tutorialTitles = ["Welcome!", "History", "Explorer", "Explorer", "Playlists"]
+    const tutorialContent = [
+        "Welcome to the dashboard! Here, different components will appear above as we progress through the tutorial. Generally, start with the cards at the top of the list and work your way down.",
+        "This is the first component. Here, you can upload your own Spotify data. If you're not quite ready to upload your data yet, you can use some example data. Go ahead and do one of these two things.",
+        "Next is the explorer. The web app uses the history you uploaded and splits your music into different listening sessions. Each session is a continuous period in which you played music. Go ahead and use the right arrow to select your first session.",
+        "Go ahead and click the first song in the session. This will play a snippet of the song, so use headphones if you'd prefer.",
+        "Finally, you can manage different playlists with this last component. Go ahead and start your first playlist by clicking \"add\", and then click on the title to rename it. Once you're done typing the name, click anywhere else to stop typing.",
+        "Almost done! Now, we can add music to the playlist. As you go through a session, hit the right arrow key on your keyboard to add a song to the playlist. Use the left arrow key to skip the song. Or, use 1 to skip and 2 to add",
+        "Sometimes, people want to sort songs into different playlists. If you'd like, add a new playlist; after, clicking either playlist will select which you'd like you're currently adding to. The currently-active playlist will have a purple ring.",
+        "Once you're done, scroll down to \"transfer\" and click a playlist you'd like to upload to your Spotify account. A notification will appear asking you to confirm the action.",
+        "That's it! If you'd like to go through the tutorial again, you can always find the help button in the bottom left. Click next to end the tutorial."
+    ]
+
+    if(tutorialState >= 0) {
+        return <div className="min-h-full flex flex-col gap-2 pt-8 relative">
+        <div className="mx-auto max-w-7xl px-4 w-full sm:px-6 lg:px-8 h-full">
+            <div className="mx-auto max-w-3xl h-full flex flex-col gap-5 pb-5">
+                {tutorialState >= 1 ? <History wipe={true} setCurrentSong={setCurrentSong} sessions={sessions} setSessions={setSessions} /> : <div className="w-full h-32 bg-gray-200 animate-pulse border border-gray-400 rounded-md" />}
+                {tutorialState >= 2 && <Player currentSong={currentSong} numberOfSeeks={numberOfSeeks} smartSeek={smartSeek} currentTrack={currentTrack} setCurrentTrack={setCurrentTrack} currentSession={currentSession} setCurrentSession={setCurrentSession} sessions={sessions} request={request} songName={songName} setRequest={setRequest} art={art} artist={artist} />}
+                    {tutorialState >= 4 && <div className="flex flex-row flex-wrap gap-5 justify-between">
+                        <PlaylistManager currentSong={currentSong} currentPlaylist={currentPlaylist} setCurrentPlaylist={setCurrentPlaylist} uri={uri} playlists={playlists} setPlaylists={setPlaylists} sessions={sessions} currentSession={currentSession} songName={songName} setRequest={setRequest} currentTrack={currentTrack} setCurrentTrack={setCurrentTrack} />
+                    </div>}
+                    {tutorialState >= 7 && playlists.length > 0 &&
+                        <Transfer playlists={playlists} />
+                    }
+                <FooterCard title={tutorialTitles[tutorialState]} actionName={"Next"} action={() => setTutorialState(s => s + 1)} secondActionName={"Previous"} secondAction={() => setTutorialState(s => s > 0 ? s - 1 : s )}>
+                    <div className="flex flex-col gap-4">
+                        <TutorialProgression tutorialState={tutorialState} setTutorialState={setTutorialState} />
+                        <p className="text-lg text-gray-700">{tutorialContent[tutorialState]}</p>
+                    </div>
+                </FooterCard>
+            </div>
+        </div>
+    </div>
+    }
+
+    return <div className="min-h-full flex flex-col gap-2 pt-8 relative">
+        <TutorialModal open={showTutorialPrompt} setOpen={setShowTutorialPrompt} title="You look new here!" text="Would you like to enable the tutorial?" action={() => setTutorialState(0)} />
         <div className="mx-auto max-w-7xl px-4 w-full sm:px-6 lg:px-8 h-full">
             <div className="mx-auto max-w-3xl h-full flex flex-col gap-5 pb-5">
                 <History setCurrentSong={setCurrentSong} sessions={sessions} setSessions={setSessions} />
@@ -101,5 +152,8 @@ export default function Dashboard() {
                 }
             </div>
         </div>
+        <button onClick={() => setShowTutorialPrompt(true)} className="fixed bottom-4 left-4 rounded-full border-2 border-red-400 bg-red-50 p-3">
+            <LifebuoyIcon className="h-10 w-10 text-red-400" />
+        </button>
     </div>
 }
