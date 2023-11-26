@@ -7,7 +7,7 @@ import { musicManager } from "../managers/MusicManager";
 import Song from "./Song";
 
 
-export default function MusicViewer({ numberOfSeeks, smartSeek, currentSession, setCurrentSession, sessions, songName, setRequest, currentTrack, setCurrentTrack }) {
+export default function QueueViewer({ numberOfSeeks, smartSeek, currentSession, setCurrentSession, sessions, songName, setRequest, currentTrack, setCurrentTrack }) {
 
     const sessionUp = () => {
         if (currentSession < sessions.length - 1)
@@ -72,7 +72,7 @@ export default function MusicViewer({ numberOfSeeks, smartSeek, currentSession, 
             <div className="px-4 py-2 pb-0 sm:p-6 sm:py-3 flex-grow overflow-y-scroll h-[18rem]">
                 <p className="w-full text-center text-gray-400" key={-1}>{sessions[currentSession].length} songs</p>
                 {sessions[currentSession].map((song, i) => {
-                    return (<Song i={i} currentTrack={currentTrack} setCurrentTrack={setCurrentTrack} song={song} songName={songName} />)
+                    return (<Song key={i} i={i} currentTrack={currentTrack} setCurrentTrack={setCurrentTrack} song={song} songName={songName} />)
                 })}
             </div>
             <div className="flex flex-col items-center">

@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 
 import { musicManager } from "./../managers/MusicManager";
 
-export default function MusicViewer({ }) {
+export default function SearchViewer({ }) {
     const nameRef = useRef();
     const artistRef = useRef();
     const [results, setResults] = useState([])

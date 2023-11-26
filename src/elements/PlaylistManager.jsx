@@ -48,7 +48,6 @@ export default function PlaylistManager({ uri, currentSong, playlists, setPlayli
             return
         // handling the "add to playlist" right arrow click requires that a playlist is target-able
         if (key == 39 || key == 50) {
-            console.log("key press")
             if (currentPlaylist < 0) return
             const songToAdd = musicManager.getCurrentSong()
             if (!songToAdd) return

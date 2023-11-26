@@ -1,10 +1,13 @@
 import { Link } from 'react-router-dom'
 
+import Notification from '../components/Notification'
+
 export default function Welcome() {
 
     return (
         <div className="bg-white h-full overflow-y-hidden">
             <div className="relative isolate px-6 pt-14 lg:px-8 h-full">
+            <Notification text="Looking to just test the application?" actionText={"Use example data"} href="link/example" />
                 <div
                     className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
                     aria-hidden="true"
@@ -17,7 +20,7 @@ export default function Welcome() {
                         }}
                     />
                 </div>
-                <div className="h-full items-center justify-center flex ">
+                <div className="h-full items-center justify-center flex relative">
                     <div className="text-center pb-12 max-w-2xl">
                         <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
                             Loopster

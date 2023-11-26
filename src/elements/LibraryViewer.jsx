@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 
 import { musicManager } from "../managers/MusicManager";
 
-export default function MusicViewer({ }) {
+export default function LibraryViewer({ }) {
     const listInnerRef = useRef();
     const [songs, setSongs] = useState([]);
     const [loading, setLoading] = useState(false);

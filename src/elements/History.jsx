@@ -7,7 +7,7 @@ import Card from "../components/Card";
 import UploadModal from "../components/UploadModal";
 
 
-export default function History({ sessions, setSessions }) {
+export default function History({ sessions, setSessions, setCurrentSong }) {
     const [modalOpen, setModalOpen] = useState(false);
     // history management
     const [history, setHistory] = useState([]);
@@ -30,7 +30,8 @@ export default function History({ sessions, setSessions }) {
             if (target.filter(obj => obj.trackName == thisSong.trackName).length > 0) continue;
             target.push(thisSong);
         }
-        s = s.filter(ses => ses.length > 25)
+        console.log(s.map(s => s.length))
+        s = s.filter(ses => ses.length > 15)
         try {
             sessionStorage.setItem("history", JSON.stringify(history))
         } catch (e) {
@@ -51,12 +52,24 @@ export default function History({ sessions, setSessions }) {
         }
     }, [])
 
+    useEffect(() => {
+        if(localStorage.getItem("example_data")) {
+            localStorage.removeItem("example_data")
+            populateExampleData();
+        }
+    })
+
+    const populateExampleData = async () => {
+        const response = await axios.get("/example_data.json");
+        setHistory(response.data)
+    }
+
     if (history.length === 0) return (<>
         <UploadModal open={modalOpen} setOpen={setModalOpen} setHistory={setHistory} />
         <Card title="Your history" actionName="Upload" action={() => setModalOpen(true)} hideBody={true} />
     </>)
 
-    return <Card title="Your history" actionName="Upload" action={() => setModalOpen(true)} secondActionName="Clear" secondAction={() => { sessionStorage.removeItem("history"); setHistory([]) }}>
+    return <Card title="Your history" actionName="Upload" action={() => setModalOpen(true)} secondActionName="Clear" secondAction={() => { sessionStorage.removeItem("history"); setCurrentSong(null); setHistory([]) }}>
         <UploadModal open={modalOpen} setOpen={setModalOpen} setHistory={setHistory} />
         <div>
             <dl className="grid grid-cols-1 gap-5 sm:grid-cols-3">

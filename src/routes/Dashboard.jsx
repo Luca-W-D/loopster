@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react"
 
-
 import History from "../elements/History";
 import Player from "../elements/Player";
 import PlaylistManager from "../elements/PlaylistManager";
@@ -68,12 +67,10 @@ export default function Dashboard() {
         musicManager.setFeeder(currentSong, setCurrentSong);
     }, [])
 
-
     const smartSeek = () => {
         const seeks = findSeeks();
         if (seeks.length == 0) return;
         setCurrentSession(seeks[Math.floor(Math.random() * seeks.length)]);
-        console.log("go to", seeks)
     }
 
     const findSeeks = (threshold = 3) => {
@@ -102,7 +99,7 @@ export default function Dashboard() {
     return <div className="min-h-full flex flex-col gap-2 pt-8">
         <div className="mx-auto max-w-7xl px-4 w-full sm:px-6 lg:px-8 h-full">
             <div className="mx-auto max-w-3xl h-full flex flex-col gap-5 pb-5">
-                <History sessions={sessions} setSessions={setSessions} />
+                <History setCurrentSong={setCurrentSong} sessions={sessions} setSessions={setSessions} />
                 <Player currentSong={currentSong} mode={mode} modes={modes} setMode={setMode} numberOfSeeks={numberOfSeeks} smartSeek={smartSeek} currentTrack={currentTrack} setCurrentTrack={setCurrentTrack} currentSession={currentSession} setCurrentSession={setCurrentSession} sessions={sessions} request={request} songName={songName} setRequest={setRequest} art={art} artist={artist} />
                 <div className="flex flex-row flex-wrap gap-5 justify-between">
                     <PlaylistManager mode={mode} currentSong={currentSong} currentPlaylist={currentPlaylist} setCurrentPlaylist={setCurrentPlaylist} uri={uri} playlists={playlists} setPlaylists={setPlaylists} sessions={sessions} currentSession={currentSession} songName={songName} setRequest={setRequest} currentTrack={currentTrack} setCurrentTrack={setCurrentTrack} />

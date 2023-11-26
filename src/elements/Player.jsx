@@ -8,7 +8,6 @@ import SearchViewer from "./SearchViewer";
 import TabMenu from "./../components/TabMenu";
 
 export default function Player({ modes, setMode, mode, sessions, numberOfSeeks, smartSeek, setRequest, currentTrack, setCurrentTrack, currentSession, setCurrentSession, songName, request, currentSong }) {
-    console.log(currentSong)
     return <Card title="Preview Music" hideTitle={true} removePadding={true}>
         <TabMenu tabs={modes} setTab={setMode} currentTab={mode} />
         <div className="flex flex-row h-full items-center p-6">
