@@ -8,10 +8,15 @@ import Card from "../components/Card";
 import UploadModal from "../components/UploadModal";
 
 
-export default function History({ sessions, setSessions, setCurrentSong }) {
+export default function History({ wipe, sessions, setSessions, setCurrentSong }) {
     const [modalOpen, setModalOpen] = useState(false);
     // history management
     const [history, setHistory] = useState([]);
+
+    useEffect(() => {
+        console.log("checking")
+        if(wipe) setHistory([]);
+    }, [])
 
     useEffect(() => {
         if (!history || history.length < 5) {
@@ -31,7 +36,6 @@ export default function History({ sessions, setSessions, setCurrentSong }) {
             if (target.filter(obj => obj.trackName == thisSong.trackName).length > 0) continue;
             target.push(thisSong);
         }
-        console.log(s.map(s => s.length))
         s = s.filter(ses => ses.length > 15)
         try {
             sessionStorage.setItem("history", JSON.stringify(history))
@@ -42,7 +46,7 @@ export default function History({ sessions, setSessions, setCurrentSong }) {
     }, [history])
 
     useEffect(() => {
-        if (sessions.length > 0) return;
+        if (sessions.length > 0 || wipe) return;
         const possibleHistory = sessionStorage.getItem("history");
         if (!possibleHistory) return;
         try {
@@ -54,7 +58,7 @@ export default function History({ sessions, setSessions, setCurrentSong }) {
     }, [])
 
     useEffect(() => {
-        if(localStorage.getItem("example_data")) {
+        if(localStorage.getItem("example_data") && !wipe) {
             localStorage.removeItem("example_data")
             populateExampleData();
         }

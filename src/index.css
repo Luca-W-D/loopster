@@ -9,3 +9,23 @@ body,
   padding: 0;
   margin: 0;
 }
+
+@keyframes progressOngoing {
+  0% {
+    width: 0%;
+    border-color: rgba(79, 70, 229, 1);
+  }
+  50% {
+    width: 100%;
+    border-color: rgba(79, 70, 229, 1);
+  }
+  100% {
+    border-color: rgba(79, 70, 229, 0);
+  }
+}
+
+#progressOngoing {
+  animation-name: progressOngoing;
+  animation-iteration-count: infinite;
+  animation-duration: 5s;
+}
