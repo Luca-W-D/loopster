@@ -10,7 +10,7 @@ export default function NavBar() {
 
     const elementClassNames = 'h-full flex items-center border-b-2 data-[active=true]:border-indigo-500 px-1 pt-1 text-sm font-medium data-[active=true]:text-gray-900 text-gray-500 border-transparent hover:border-gray-300'
     return (
-        <div as="nav" className="bg-white shadow z-10">
+        <div as="nav" className="bg-white shadow z-20">
             <div className="flex items-center flex-row">
                 <div className="flex h-16 justify-between w-full items-center px-4">
                     <div className="ml-6 flex space-x-8 h-full">
@@ -41,7 +41,7 @@ export default function NavBar() {
                         <button
                             type="button"
                             className="h-fit rounded-md bg-red-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
-                            onClick={() => { tokenManager.wipe(); navigate("/link") }}
+                            onClick={() => { tokenManager.wipe(); navigate("/link"); localStorage.removeItem("tutorialPrompted") }}
                         >
                             Logout
                         </button>

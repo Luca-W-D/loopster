@@ -70,7 +70,7 @@ export default function PlaylistManager({ uri, currentSong, playlists, setPlayli
                 <button
                     type="button"
                     className="transition rounded-md bg-indigo-600 px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                    onClick={() => setPlaylists(p => [...p, { playlistName: "Playlist", songs: [] }])}>
+                    onClick={() => setPlaylists(p => [...p, { playlistName: "Playlist Name", songs: [] }])}>
                     Add
                 </button>
             </div>
