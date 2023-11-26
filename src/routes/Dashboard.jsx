@@ -15,9 +15,6 @@ export default function Dashboard() {
     const [art, setArt] = useState(null);
     const [artist, setArtist] = useState(null);
     const [uri, setUri] = useState(null);
-    // dashboard state managment
-    const [mode, setMode] = useState("History");
-    const modes = ["History", "Library", "Search"];
     // track management
     const [currentTrack, setCurrentTrack] = useState(-1);
     const [currentSession, setCurrentSession] = useState(-1);
@@ -57,11 +54,6 @@ export default function Dashboard() {
         findSeeks();
     }, [currentPlaylist, currentTrack])
 
-    // stop music on tab change
-    useEffect(() => {
-        musicManager.stop();
-    }, [mode])
-
     // connect music manager to current song state
     useEffect(() => {
         musicManager.setFeeder(currentSong, setCurrentSong);
@@ -100,9 +92,9 @@ export default function Dashboard() {
         <div className="mx-auto max-w-7xl px-4 w-full sm:px-6 lg:px-8 h-full">
             <div className="mx-auto max-w-3xl h-full flex flex-col gap-5 pb-5">
                 <History setCurrentSong={setCurrentSong} sessions={sessions} setSessions={setSessions} />
-                <Player currentSong={currentSong} mode={mode} modes={modes} setMode={setMode} numberOfSeeks={numberOfSeeks} smartSeek={smartSeek} currentTrack={currentTrack} setCurrentTrack={setCurrentTrack} currentSession={currentSession} setCurrentSession={setCurrentSession} sessions={sessions} request={request} songName={songName} setRequest={setRequest} art={art} artist={artist} />
+                <Player currentSong={currentSong} numberOfSeeks={numberOfSeeks} smartSeek={smartSeek} currentTrack={currentTrack} setCurrentTrack={setCurrentTrack} currentSession={currentSession} setCurrentSession={setCurrentSession} sessions={sessions} request={request} songName={songName} setRequest={setRequest} art={art} artist={artist} />
                 <div className="flex flex-row flex-wrap gap-5 justify-between">
-                    <PlaylistManager mode={mode} currentSong={currentSong} currentPlaylist={currentPlaylist} setCurrentPlaylist={setCurrentPlaylist} uri={uri} playlists={playlists} setPlaylists={setPlaylists} sessions={sessions} currentSession={currentSession} songName={songName} setRequest={setRequest} currentTrack={currentTrack} setCurrentTrack={setCurrentTrack} />
+                    <PlaylistManager currentSong={currentSong} currentPlaylist={currentPlaylist} setCurrentPlaylist={setCurrentPlaylist} uri={uri} playlists={playlists} setPlaylists={setPlaylists} sessions={sessions} currentSession={currentSession} songName={songName} setRequest={setRequest} currentTrack={currentTrack} setCurrentTrack={setCurrentTrack} />
                 </div>
                 {playlists.length > 0 &&
                     <Transfer playlists={playlists} />

@@ -1,11 +1,18 @@
 import React from "react";
 
-export default function Card({ title, children, actionName, action, secondAction, secondActionName, hideTitle, hideBody, removePadding }) {
+export default function Card({ title, children, actionName, action, secondAction, secondActionName, hideTitle, hideBody, removePadding, minorAction, minorActionName }) {
     return (
         <div className="overflow-hidden rounded-lg bg-white shadow border border-gray-200">
             {!hideTitle && <div className="border-b border-gray-200 px-4 py-4 sm:px-6 flex items-center justify-between">
                 <h2 className="text-md font-medium">{title}</h2>
-                <span className="flex gap-3">
+                <span className="flex gap-4">
+                    {minorAction && <button
+                            type="button"
+                            className="text-sm font-semibold text-indigo-500"
+                            onClick={minorAction}
+                        >
+                            {minorActionName}
+                        </button>}
                     {secondAction &&
                         <button
                             type="button"

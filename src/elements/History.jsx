@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 import { tokenManager } from "../managers/TokenManager";
+import { musicManager } from "../managers/MusicManager";
 
 import Card from "../components/Card";
 import UploadModal from "../components/UploadModal";
@@ -66,10 +67,10 @@ export default function History({ sessions, setSessions, setCurrentSong }) {
 
     if (history.length === 0) return (<>
         <UploadModal open={modalOpen} setOpen={setModalOpen} setHistory={setHistory} />
-        <Card title="Your history" actionName="Upload" action={() => setModalOpen(true)} hideBody={true} />
+        <Card title="Your history" minorActionName="Use Example Data" minorAction={() => {populateExampleData()}} actionName="Upload" action={() => setModalOpen(true)} hideBody={true} />
     </>)
 
-    return <Card title="Your history" actionName="Upload" action={() => setModalOpen(true)} secondActionName="Clear" secondAction={() => { sessionStorage.removeItem("history"); setCurrentSong(null); setHistory([]) }}>
+    return <Card title="Your history" actionName="Upload" action={() => setModalOpen(true)} secondActionName="Clear" secondAction={() => { sessionStorage.removeItem("history"); setCurrentSong(null); musicManager.stop(); setHistory([]) }}>
         <UploadModal open={modalOpen} setOpen={setModalOpen} setHistory={setHistory} />
         <div>
             <dl className="grid grid-cols-1 gap-5 sm:grid-cols-3">
