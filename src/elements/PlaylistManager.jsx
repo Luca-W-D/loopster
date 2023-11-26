@@ -4,7 +4,7 @@ import { XMarkIcon } from "@heroicons/react/24/outline"
 import PlaylistModal from "../components/PlaylistModal";
 import { musicManager } from "../managers/MusicManager";
 
-export default function PlaylistManager({ uri, currentSong, playlists, setPlaylists, currentPlaylist, setCurrentPlaylist, songName, setRequest, setCurrentTrack, sessions, currentSession, mode }) {
+export default function PlaylistManager({ uri, currentSong, playlists, setPlaylists, currentPlaylist, setCurrentPlaylist, songName, setRequest, setCurrentTrack, sessions, currentSession }) {
     const [modalOpen, setModalOpen] = useState(false);
 
 
@@ -35,8 +35,6 @@ export default function PlaylistManager({ uri, currentSong, playlists, setPlayli
         setPlaylists(p => [...p.slice(0, i), { ...p[i], songs: p[i].songs.filter(v => v.name !== name) }, ...p.slice(i + 1)])
     }
     const increaseTrack = () => {
-        if (mode === "Search")
-            return
         setCurrentTrack(t => t + 1)
     }
 
