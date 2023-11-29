@@ -17,6 +17,7 @@ export default function Dashboard() {
     const [tutorialState, setTutorialState] = useState(-1);
     const [showTutorialPrompt, setShowTutorialPrompt] = useState(localStorage.getItem("tutorialPrompted") === null || localStorage.getItem("tutorialPrompted") === undefined)
     // data management
+    const [history, setHistory] = useState([]);
     const [sessions, setSessions] = useState([]);
     const [request, setRequest] = useState([]);
     const [songName, setSongName] = useState(null);
@@ -101,6 +102,7 @@ export default function Dashboard() {
         if(tutorialState >= 9) {
             musicManager.stop()
             setTutorialState(-1);
+            setRequest([])
         }
     }, [tutorialState])
 
@@ -121,11 +123,12 @@ export default function Dashboard() {
         "That's it! If you'd like to go through the tutorial again, you can always find the help button in the bottom left. Click next to end the tutorial."
     ]
 
+
     if(tutorialState >= 0) {
         return <div className="min-h-full flex flex-col gap-2 pt-8 relative">
         <div className="mx-auto max-w-7xl px-4 w-full sm:px-6 lg:px-8 h-full">
             <div className="mx-auto max-w-3xl h-full flex flex-col gap-5 pb-5">
-                {tutorialState >= 1 ? <History wipe={true} setCurrentSong={setCurrentSong} sessions={sessions} setSessions={setSessions} /> : <div className="w-full h-32 border border-gray-400 rounded-md relative  flex items-center justify-center"><div className="bg-gray-200 animate-pulse w-full h-full absolute top-0 left-0 z-0" /><p className="z-10 text-gray-500 font-semibold">Components will appear here</p></div>}
+                {tutorialState >= 1 ? <History history={history} setHistory={setHistory} wipe={true} setCurrentSong={setCurrentSong} sessions={sessions} setSessions={setSessions} /> : <div className="w-full h-32 border border-gray-400 rounded-md relative  flex items-center justify-center"><div className="bg-gray-200 animate-pulse w-full h-full absolute top-0 left-0 z-0" /><p className="z-10 text-gray-500 font-semibold">Components will appear here</p></div>}
                 {tutorialState >= 2 && <Player currentSong={currentSong} numberOfSeeks={numberOfSeeks} smartSeek={smartSeek} currentTrack={currentTrack} setCurrentTrack={setCurrentTrack} currentSession={currentSession} setCurrentSession={setCurrentSession} sessions={sessions} request={request} songName={songName} setRequest={setRequest} art={art} artist={artist} />}
                     {tutorialState >= 4 && <div className="flex flex-row flex-wrap gap-5 justify-between">
                         <PlaylistManager currentSong={currentSong} currentPlaylist={currentPlaylist} setCurrentPlaylist={setCurrentPlaylist} uri={uri} playlists={playlists} setPlaylists={setPlaylists} sessions={sessions} currentSession={currentSession} songName={songName} setRequest={setRequest} currentTrack={currentTrack} setCurrentTrack={setCurrentTrack} />
@@ -148,7 +151,7 @@ export default function Dashboard() {
         <TutorialModal open={showTutorialPrompt} setOpen={setShowTutorialPrompt} title="You look new here!" text="Would you like to enable the tutorial?" action={() => setTutorialState(0)} />
         <div className="mx-auto max-w-7xl px-4 w-full sm:px-6 lg:px-8 h-full">
             <div className="mx-auto max-w-3xl h-full flex flex-col gap-5 pb-5">
-                <History setCurrentSong={setCurrentSong} sessions={sessions} setSessions={setSessions} />
+                <History history={history} setHistory={setHistory} setCurrentSong={setCurrentSong} sessions={sessions} setSessions={setSessions} />
                 <Player currentSong={currentSong} numberOfSeeks={numberOfSeeks} smartSeek={smartSeek} currentTrack={currentTrack} setCurrentTrack={setCurrentTrack} currentSession={currentSession} setCurrentSession={setCurrentSession} sessions={sessions} request={request} songName={songName} setRequest={setRequest} art={art} artist={artist} />
                 <div className="flex flex-row flex-wrap gap-5 justify-between">
                     <PlaylistManager currentSong={currentSong} currentPlaylist={currentPlaylist} setCurrentPlaylist={setCurrentPlaylist} uri={uri} playlists={playlists} setPlaylists={setPlaylists} sessions={sessions} currentSession={currentSession} songName={songName} setRequest={setRequest} currentTrack={currentTrack} setCurrentTrack={setCurrentTrack} />

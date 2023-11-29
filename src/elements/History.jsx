@@ -8,10 +8,8 @@ import Card from "../components/Card";
 import UploadModal from "../components/UploadModal";
 
 
-export default function History({ wipe, sessions, setSessions, setCurrentSong }) {
+export default function History({ history, setHistory, wipe, sessions, setSessions, setCurrentSong }) {
     const [modalOpen, setModalOpen] = useState(false);
-    // history management
-    const [history, setHistory] = useState([]);
 
     useEffect(() => {
         if(wipe) {
