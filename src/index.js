@@ -51,6 +51,7 @@ const router = createBrowserRouter([
         path: "/redirect",
         element: <></>,
         loader: async () => {
+          localStorage.removeItem("tutorialPrompted");
           const urlParams = new URLSearchParams(window.location.search);
           let code = urlParams.get("code");
           await tokenManager.setCode(code);

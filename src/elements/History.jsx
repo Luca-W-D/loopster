@@ -14,8 +14,10 @@ export default function History({ wipe, sessions, setSessions, setCurrentSong })
     const [history, setHistory] = useState([]);
 
     useEffect(() => {
-        console.log("checking")
-        if(wipe) setHistory([]);
+        if(wipe) {
+            setHistory([])
+            setCurrentSong(null);
+        };
     }, [])
 
     useEffect(() => {

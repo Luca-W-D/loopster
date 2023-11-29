@@ -98,17 +98,23 @@ export default function Dashboard() {
     }, [])
 
     useEffect(() => {
-        if(tutorialState >= 9)
+        if(tutorialState >= 9) {
+            musicManager.stop()
             setTutorialState(-1);
+        }
     }, [tutorialState])
 
-    const tutorialTitles = ["Welcome!", "History", "Explorer", "Explorer", "Playlists"]
+    useEffect(() => {
+        musicManager.stop()
+    }, [sessions])
+
+    const tutorialTitles = ["Welcome!", "History", "Explorer", "Explorer", "Playlists", "Playlists", "Playlists", "Transfer Playlists", "End"]
     const tutorialContent = [
-        "Welcome to the dashboard! Here, different components will appear above as we progress through the tutorial. Generally, start with the cards at the top of the list and work your way down.",
-        "This is the first component. Here, you can upload your own Spotify data. If you're not quite ready to upload your data yet, you can use some example data. Go ahead and do one of these two things.",
+        "Welcome to the dashboard! Here, different components will appear above as we progress through the tutorial. Generally, start at the top of the list and work your way down.",
+        "This is the first component. Here, you can upload your own Spotify data. If you're not quite ready to upload your data yet, you can use some example data. Start by choosing one of these two options.",
         "Next is the explorer. The web app uses the history you uploaded and splits your music into different listening sessions. Each session is a continuous period in which you played music. Go ahead and use the right arrow to select your first session.",
-        "Go ahead and click the first song in the session. This will play a snippet of the song, so use headphones if you'd prefer.",
-        "Finally, you can manage different playlists with this last component. Go ahead and start your first playlist by clicking \"add\", and then click on the title to rename it. Once you're done typing the name, click anywhere else to stop typing.",
+        "Now, click the first song in the session. This will play a snippet of the song, so use headphones if you'd prefer.",
+        "Finally, you can manage different playlists with this last component. Start your first playlist by clicking \"add\", and then click on the title to rename it. Once you're done typing the name, click anywhere else to stop typing.",
         "Almost done! Now, we can add music to the playlist. As you go through a session, hit the right arrow key on your keyboard to add a song to the playlist. Use the left arrow key to skip the song. Or, use 1 to skip and 2 to add",
         "Sometimes, people want to sort songs into different playlists. If you'd like, add a new playlist; after, clicking either playlist will select which you'd like you're currently adding to. The currently-active playlist will have a purple ring.",
         "Once you're done, scroll down to \"transfer\" and click a playlist you'd like to upload to your Spotify account. A notification will appear asking you to confirm the action.",
@@ -119,7 +125,7 @@ export default function Dashboard() {
         return <div className="min-h-full flex flex-col gap-2 pt-8 relative">
         <div className="mx-auto max-w-7xl px-4 w-full sm:px-6 lg:px-8 h-full">
             <div className="mx-auto max-w-3xl h-full flex flex-col gap-5 pb-5">
-                {tutorialState >= 1 ? <History wipe={true} setCurrentSong={setCurrentSong} sessions={sessions} setSessions={setSessions} /> : <div className="w-full h-32 bg-gray-200 animate-pulse border border-gray-400 rounded-md" />}
+                {tutorialState >= 1 ? <History wipe={true} setCurrentSong={setCurrentSong} sessions={sessions} setSessions={setSessions} /> : <div className="w-full h-32 border border-gray-400 rounded-md relative  flex items-center justify-center"><div className="bg-gray-200 animate-pulse w-full h-full absolute top-0 left-0 z-0" /><p className="z-10 text-gray-500 font-semibold">Components will appear here</p></div>}
                 {tutorialState >= 2 && <Player currentSong={currentSong} numberOfSeeks={numberOfSeeks} smartSeek={smartSeek} currentTrack={currentTrack} setCurrentTrack={setCurrentTrack} currentSession={currentSession} setCurrentSession={setCurrentSession} sessions={sessions} request={request} songName={songName} setRequest={setRequest} art={art} artist={artist} />}
                     {tutorialState >= 4 && <div className="flex flex-row flex-wrap gap-5 justify-between">
                         <PlaylistManager currentSong={currentSong} currentPlaylist={currentPlaylist} setCurrentPlaylist={setCurrentPlaylist} uri={uri} playlists={playlists} setPlaylists={setPlaylists} sessions={sessions} currentSession={currentSession} songName={songName} setRequest={setRequest} currentTrack={currentTrack} setCurrentTrack={setCurrentTrack} />
