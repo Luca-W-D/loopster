@@ -10,9 +10,9 @@ export default function Notification({text, actionText, href}) {
           <InformationCircleIcon className="h-5 w-5 text-red-400" aria-hidden="true" />
         </div>
         <div className="ml-3 flex-1 md:flex md:justify-between">
-          <p className="text-sm text-blue-700">{text}</p>
+          <p className="text-sm text-red-700">{text}</p>
           <p className="mt-3 text-sm md:ml-6 md:mt-0">
-            <Link to={href} onClick={() => {localStorage.setItem("example_data", true);}} className="whitespace-nowrap font-medium text-blue-700 hover:text-blue-600">
+            <Link to={href} onClick={() => {localStorage.setItem("example_data", true);}} className="whitespace-nowrap font-medium text-red-700 hover:text-red-600">
               {actionText}
             </Link>
           </p>
