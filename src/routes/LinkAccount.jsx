@@ -11,10 +11,10 @@ export default function LinkAccount({ example }) {
                 <div className="px-6 py-24 sm:px-6 sm:py-32 lg:px-8">
                     <div className="mx-auto max-w-2xl text-center">
                         <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-                            Got it! You'll use example data.
+                            Demo Version
                         </h2>
                         <p className="mx-auto mt-6 max-w-xl text-lg leading-8 text-gray-600">
-                            In order to test the tool, you still need Spotify access. If you don't have an account but would like to test the tool, please reach out to me! :)
+                            In order to test the tool, you still need Spotify access. Please reach out to me for credentials to a Spotify account if you have not yet received them. (You can use your own too, if you want!)
                         </p>
                         <div className="mt-10 flex items-center justify-center gap-x-6">
                             <Link to={"/link"} className="text-sm font-semibold leading-6 text-gray-900">

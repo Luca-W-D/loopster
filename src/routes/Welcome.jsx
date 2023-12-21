@@ -7,7 +7,7 @@ export default function Welcome() {
     return (
         <div className="bg-white h-full overflow-y-hidden">
             <div className="relative isolate px-6 pt-14 lg:px-8 h-full">
-            <Notification text="Looking to just test the application?" actionText={"Use example data"} href="link/example" />
+            <Notification text="Are you a recruiter or employer?" actionText={"Demo this app"} href="link/example" />
                 <div
                     className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
                     aria-hidden="true"
