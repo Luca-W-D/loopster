@@ -4,7 +4,7 @@ import { InformationCircleIcon } from '@heroicons/react/20/solid'
 
 export default function Notification({text, actionText, href}) {
   return (
-    <div className="rounded-md bg-blue-50 p-4 absolute top-4 right-4 border-red-300 border-2 z-10">
+    <div className="rounded-md bg-red-50 p-4 absolute top-4 right-4 border-red-300 border-2 z-10">
       <div className="flex">
         <div className="flex-shrink-0">
           <InformationCircleIcon className="h-5 w-5 text-red-400" aria-hidden="true" />

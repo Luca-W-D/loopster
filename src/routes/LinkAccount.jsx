@@ -14,17 +14,17 @@ export default function LinkAccount({ example }) {
                             Demo Version
                         </h2>
                         <p className="mx-auto mt-6 max-w-xl text-lg leading-8 text-gray-600">
-                            In order to test the tool, you still need Spotify access. Please reach out to me for credentials to a Spotify account if you have not yet received them. (You can use your own too, if you want!)
+                            In order to test the tool, you still need Spotify access. Please contact me if you were not given a Spotify login.
                         </p>
                         <div className="mt-10 flex items-center justify-center gap-x-6">
                             <Link to={"/link"} className="text-sm font-semibold leading-6 text-gray-900">
-                                I actually have my own data
+                                I have my own account
                             </Link>
                             <button
                                 onClick={tokenManager.requestPermissions.bind(tokenManager)}
                                 className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                             >
-                                Give Spotify permissions
+                                Grant Spotify permissions
                             </button>
                         </div>
                     </div>
