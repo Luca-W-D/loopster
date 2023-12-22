@@ -1,23 +1,34 @@
-import { Link } from 'react-router-dom'
+import { Link } from "react-router-dom";
 
-import { InformationCircleIcon } from '@heroicons/react/20/solid'
+import { InformationCircleIcon } from "@heroicons/react/20/solid";
 
-export default function Notification({text, actionText, href}) {
+export default function Notification({ text, actionText, href }) {
   return (
     <div className="rounded-md bg-red-50 p-4 absolute top-4 right-4 border-red-300 border-2 z-10">
       <div className="flex">
         <div className="flex-shrink-0">
-          <InformationCircleIcon className="h-5 w-5 text-red-400" aria-hidden="true" />
+          <InformationCircleIcon
+            className="h-5 w-5 text-red-400"
+            aria-hidden="true"
+          />
         </div>
         <div className="ml-3 flex-1 md:flex md:justify-between">
           <p className="text-sm text-red-700">{text}</p>
-          <p className="mt-3 text-sm md:ml-6 md:mt-0">
-            <Link to={href} onClick={() => {localStorage.setItem("example_data", true);}} className="whitespace-nowrap font-medium text-red-700 hover:text-red-600">
-              {actionText}
-            </Link>
-          </p>
+          {actionText && (
+            <p className="mt-3 text-sm md:ml-6 md:mt-0">
+              <Link
+                to={href}
+                onClick={() => {
+                  localStorage.setItem("example_data", true);
+                }}
+                className="whitespace-nowrap font-medium text-red-700 hover:text-red-600"
+              >
+                {actionText}
+              </Link>
+            </p>
+          )}
         </div>
       </div>
     </div>
-  )
+  );
 }
