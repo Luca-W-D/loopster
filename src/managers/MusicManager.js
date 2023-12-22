@@ -80,21 +80,18 @@ export class MusicManager extends React.Component {
     const art = entry.album.images[0].url;
     let preview = entry.preview_url;
     if (!preview) {
-      try {
-        const newLink = entry.href;
-        const otherPreview = await axios
-          .get(newLink, {
-            headers: {
-              Authorization: `Bearer ${await tokenManager.getSafeToken()}`,
-            },
-          })
-          .catch((e) => {
-            console.log("backup preview failed", e);
-          });
-        preview = otherPreview.data.preview_url;
-      } catch (e) {
-        console.log("backup preview finding failed");
-      }
+      const newLink = entry.href;
+      const otherPreview = await axios
+        .get(newLink, {
+          headers: {
+            Authorization: `Bearer ${await tokenManager.getSafeToken()}`,
+          },
+        })
+        .catch((e) => {
+          console.log("backup preview failed", e);
+        });
+      preview = otherPreview.data.preview_url;
+      if (!preview) throw "no preview";
     }
     const newAudio = new Audio(preview);
     this.addAudio(newAudio);

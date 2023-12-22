@@ -5,7 +5,6 @@ import MusicViewer from "./MusicViewer";
 import QueueViewer from "./QueueViewer";
 
 export default function Player({ sessions, numberOfSeeks, smartSeek, setRequest, currentTrack, setCurrentTrack, currentSession, setCurrentSession, songName, request, currentSong }) {
-    console.log("cs", currentSong)
     return <Card title="Preview Music" hideTitle={true} removePadding={true}>
         <div className="flex flex-row h-full items-center p-6">
             {currentSong ? <MusicViewer name={currentSong.name} artist={currentSong.artist} art={currentSong.art} /> : <MusicViewer />}
