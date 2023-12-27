@@ -49,11 +49,14 @@ export default function Dashboard() {
 
   // allow child components to request song changes
   useEffect(() => {
+    if (!request || request.length != 2) {
+      setSongName(null);
+      return;
+    }
+    if(notificationTimer) clearTimeout(notificationTimer)
+    setNotificationText(null);
+    setNotificationTimer(null);
     const attempt = async () => {
-      if (!request || request.length != 2) {
-        setSongName(null);
-        return;
-      }
       const info = await musicManager.searchAndPlay(request[0], request[1]);
       if (!info) return;
       setSongName(info.name);
