@@ -72,6 +72,9 @@ export class MusicManager extends React.Component {
     }
   }
 
+  // not a fail-safe function
+  // will throw an error to be caught by the calling method
+  // if the song cannot be played
   async searchAndPlay(name, artist) {
     const entries = await this.search(name, artist);
     const entry = entries[0];
@@ -88,10 +91,10 @@ export class MusicManager extends React.Component {
           },
         })
         .catch((e) => {
-          console.log("backup preview failed", e);
+          throw "preview failed";
         });
       preview = otherPreview.data.preview_url;
-      if (!preview) throw "no preview";
+      if (!preview) throw "preview failed";
     }
     const newAudio = new Audio(preview);
     this.addAudio(newAudio);

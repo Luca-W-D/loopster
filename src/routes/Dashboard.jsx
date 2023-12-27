@@ -194,6 +194,7 @@ export default function Dashboard() {
                 setRequest={setRequest}
                 art={art}
                 artist={artist}
+                notificationText={notificationText}
               />
             )}
             {tutorialState >= 4 && (
@@ -273,6 +274,7 @@ export default function Dashboard() {
             setRequest={setRequest}
             art={art}
             artist={artist}
+            notificationText={notificationText}
           />
           <div className="flex flex-row flex-wrap gap-5 justify-between">
             <PlaylistManager
